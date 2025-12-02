@@ -1,55 +1,64 @@
-// 4)	Write a program to input marks of n students Sort the marks in ascending order using the Quick Sort algorithm without using built-in library functions and analyse the sorting algorithm pass by pass. Find the minimum and maximum marks using Divide and Conquer (recursively).
-#include <iostream>
-#include <vector>
+ #include <iostream>
 using namespace std;
-int partition(int array[], int first, int last)
-{
-    int pivot = array[last];
-    int i = first - 1;
 
-    for (int j = first; j < last; j++)
-    {
-        if (array[j] < pivot)
-        {
+class student {
+public:
+    string name;
+    int marks;
+};
+
+// function to swap two students
+void swapStudent(student &a, student &b) {
+    student temp = a;
+    a = b;
+    b = temp;
+}
+
+// partition function
+int partition(student s[], int low, int high) {
+    int pivot = s[high].marks;  // choose last element as pivot
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (s[j].marks < pivot) {   // ascending order
             i++;
-            swap(array[j], array[i]);
+            swapStudent(s[i], s[j]);
         }
     }
-    swap(array[i + 1], array[last]);
+
+    swapStudent(s[i + 1], s[high]); // place pivot correct position
     return i + 1;
 }
-void quick(int array[], int first, int last)
-{
-    if (first >= last)
-    {
-        return;
-    }
 
-    int pi = partition(array, first, last);
-    quick(array, first, pi - 1);
-    quick(array, pi + 1, last);
+// quick sort function
+void quickSort(student s[], int low, int high) {
+    if (low < high) {
+        int pi = partition(s, low, high);
+
+        quickSort(s, low, pi - 1);   // left side
+        quickSort(s, pi + 1, high);  // right side
+    }
 }
-int main()
-{
-    int n;
-    cout << "Enter number of students :";
-    cin >> n;
 
-    string name[n];
-    int marks[n];
+int main() {
+    student s[20];
 
-    for (int i = 0; i < n; i++)
-    {
-        cout << "Enter marks of student " << i + 1 << " in percentage : ";
-        cin >> marks[i];
+    // input
+    for (int i = 0; i < 20; i++) {
+        cout << "Enter name: ";
+        cin >> s[i].name;
+        cout << "Enter marks: ";
+        cin >> s[i].marks;
     }
-    quick(marks, 0, n - 1);
 
-    cout << endl;
-    for (int i = 0; i < n; i++)
-    {
-        cout << "Marks :" << marks[i] << endl;
+    // quick sort call
+    quickSort(s, 0, 19);
+
+    // output
+    cout << "\nSorted by marks (ascending):\n";
+    for (int i = 0; i < 20; i++) {
+        cout << s[i].name << " " << s[i].marks << endl;
     }
-    cout << "Maximum marks : " << marks[n - 1] << ", Minimun marks : " << marks[0] << endl;
+
     return 0;
 }
