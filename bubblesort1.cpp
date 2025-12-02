@@ -1,3 +1,6 @@
+//Write a program using Bubble sort algorithm, assign the roll nos. to the students of 
+your class as per their previous years result. i.e. topper will be roll no. 1 and analyse 
+the sorting algorithm pass by pass.
 #include<iostream>
 #include<string>
 #include<vector>
