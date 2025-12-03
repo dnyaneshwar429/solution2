@@ -2,9 +2,13 @@
 // The menu must include: • Insert • Delete • Find • Show
 // 2) Write a Program to create a Binary Tree Search and Find Minimum/Maximum in
 //  BST
+ // 4) BST Program with Insert, Delete, Find, Show
+// Also Find Minimum & Maximum in BST
+
 #include <iostream>
 #include <queue>
 using namespace std;
+
 class Node
 {
 public:
@@ -19,20 +23,25 @@ public:
         left = nullptr;
     }
 };
+
 Node *createNode(int data)
 {
-    Node *new_node = new Node(data);
+    return new Node(data);  // FIXED: return statement added
 }
+
 Node *insertNode(Node *root, int data)
 {
     if (root == nullptr)
         return createNode(data);
+
     if (data < root->data)
         root->left = insertNode(root->left, data);
     else
         root->right = insertNode(root->right, data);
+
     return root;
 }
+
 void Level_order(Node *root)
 {
     if (root == nullptr)
@@ -43,7 +52,6 @@ void Level_order(Node *root)
 
     while (!q.empty())
     {
-
         Node *curr = q.front();
         q.pop();
 
@@ -55,18 +63,22 @@ void Level_order(Node *root)
     }
     cout << endl;
 }
+
 int main()
 {
     Node *root = nullptr;
-    int choice, val;
+    int choice, val, n;
 
-    root = createNode(10);
-    root->left = createNode(5);
-    root->right = createNode(20);
-    root->left->left = createNode(4);
-    root->left->right = createNode(7);
-    root->right->left = createNode(15);
-    root->right->right = createNode(30);
+    // 🌟 TAKE INPUT FROM USER TO CREATE INITIAL TREE
+    cout << "Enter number of nodes you want to insert initially: ";
+    cin >> n;
+
+    cout << "Enter " << n << " values:\n";
+    for (int i = 0; i < n; i++)
+    {
+        cin >> val;
+        root = insertNode(root, val);
+    }
 
     while (true)
     {
@@ -112,3 +124,4 @@ int main()
 
     return 0;
 }
+
